@@ -1,0 +1,5 @@
+behave==1.2.6
+selenium==4.18.1
+webdriver-manager==4.0.1
+python-dotenv==1.0.0
+assertpy==1.1
