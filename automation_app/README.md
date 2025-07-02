@@ -35,15 +35,55 @@ appium
 
 ## Running Tests
 
-To run all tests:
+### Pre-run Checklist
+1. Connect Android device via USB and enable USB debugging
+2. Verify device is connected:
 ```bash
-behave features/wallet_creation.feature
+adb devices
+# Should show something like:
+# RR8R708RESJ    device
 ```
 
-To run specific tags:
+3. Kill any existing Appium server:
 ```bash
-behave --tags=@test_wallet_creation
+pkill -f appium
 ```
+
+4. Start Appium server in a new terminal:
+```bash
+appium --log-level debug
+```
+
+### Running the Tests
+
+1. Run wallet creation test:
+```bash
+behave features/wallet_creation.feature -f pretty
+```
+
+2. Or run with specific tags:
+```bash
+behave --tags=@test_wallet_creation -f pretty
+```
+
+### Troubleshooting
+
+If test fails:
+1. Check device connection:
+```bash
+adb devices
+```
+
+2. Restart Appium server:
+```bash
+pkill -f appium
+appium --log-level debug
+```
+
+3. Verify:
+- Trust Wallet APK exists in correct path
+- Trust Wallet app is not running in background
+- Device screen is unlocked and awake
 
 ## Project Structure
 

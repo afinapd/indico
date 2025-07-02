@@ -12,7 +12,7 @@ API testing suite for the Petstore Swagger API.
   - Finding pets by status (available)
   - Finding pets by status (pending)
 
-Demo API: [Petstore Swagger](https://petstore.swagger.io/#/)
+API: [Petstore Swagger](https://petstore.swagger.io/#/)
 
 ### 2. Web UI Automation (`automation_web/`)
 Web UI testing suite for a demo registration form.
@@ -22,7 +22,7 @@ Web UI testing suite for a demo registration form.
   - Date picker interaction
   - File upload functionality
 
-Demo Website: [Test Automation Practice](https://testautomationpractice.blogspot.com/)
+Website: [Test Automation Practice](https://testautomationpractice.blogspot.com/)
 
 ### 3. Mobile App Automation (`automation_app/`)
 Mobile app testing suite for Trust Wallet Android app.
@@ -33,13 +33,13 @@ Mobile app testing suite for Trust Wallet Android app.
   - Biometric authentication handling
   - Backup skip functionality
 
-Demo App: [Trust Wallet](https://trustwallet.com/id)
+App: [Trust Wallet](https://trustwallet.com/id)
 
 ## Demo Videos How To Run
 
 - API Automation Demo: [Watch Demo](https://drive.google.com/file/d/132qDKOxTpc99i5Hy10qYM1-miRAMTsIL/view?usp=sharing)
 - Web UI Automation Demo: [Watch Demo](https://youtu.be/dummy-web)
-- Mobile App Automation Demo: [Watch Demo](https://youtu.be/dummy-mobile)
+- Mobile App Automation Demo: [Watch Demo](https://drive.google.com/file/d/1TYLuU86znELHCo0SGeasOlivs2lkIMrq/view?usp=sharing)
 
 ## Setup and Installation
 
