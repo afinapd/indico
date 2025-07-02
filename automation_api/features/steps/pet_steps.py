@@ -1,26 +1,16 @@
+import json
 from behave import given, when, then
 from assertpy import assert_that
 from features.pages.pet_api import PetApi
 
+def load_test_data(filename):
+    with open(f'test_data/{filename}') as f:
+        return json.load(f)
+
 @given('I have pet details to add')
 def step_impl(context):
     context.pet_api = PetApi()
-    context.pet_data = {
-        "id": 12345,
-        "category": {
-            "id": 1,
-            "name": "Dogs"
-        },
-        "name": "Buddy",
-        "photoUrls": ["https://example.com/dog.jpg"],
-        "tags": [
-            {
-                "id": 0,
-                "name": "friendly"
-            }
-        ],
-        "status": "available"
-    }
+    context.pet_data = load_test_data('pet.json')
 
 @when('I send POST request to add a new pet')
 def step_impl(context):
