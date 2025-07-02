@@ -38,7 +38,7 @@ App: [Trust Wallet](https://trustwallet.com/id)
 ## Demo Videos How To Run
 
 - API Automation Demo: [Watch Demo](https://drive.google.com/file/d/132qDKOxTpc99i5Hy10qYM1-miRAMTsIL/view?usp=sharing)
-- Web UI Automation Demo: [Watch Demo](https://youtu.be/dummy-web)
+- Web UI Automation Demo: [Watch Demo](https://drive.google.com/file/d/1X4uTuXFpE-4SLwNVuNVyNFvHn1lfjl6I/view?usp=sharing)
 - Mobile App Automation Demo: [Watch Demo](https://drive.google.com/file/d/1TYLuU86znELHCo0SGeasOlivs2lkIMrq/view?usp=sharing)
 
 ## Setup and Installation
