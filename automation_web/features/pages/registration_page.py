@@ -13,25 +13,19 @@ class RegistrationPage:
         self.wait = WebDriverWait(driver, 10)
 
     # Form Locators
-    NAME_INPUT = (By.XPATH, "//input[@id='name']")
-    EMAIL_INPUT = (By.XPATH, "//input[@id='email']")
-    PHONE_INPUT = (By.XPATH, "//input[@id='phone']")
-    ADDRESS_INPUT = (By.XPATH, "//textarea[@id='textarea']")
-    GENDER_RADIO = (By.XPATH, "//input[@type='radio'][@value='{}']")
-    DAYS_CHECKBOX = (By.XPATH, "//input[@type='checkbox'][@value='{}']")
-    COUNTRY_SELECT = (By.XPATH, "//select[@id='country']")
-    COLOR_SELECT = (By.XPATH, "//select[@id='colors']")
-    SORTED_LIST = (By.XPATH, "//select[@id='animals']")
-    DATE_PICKER_1 = (By.XPATH, "//input[@id='datepicker']")
-    DATE_PICKER_2 = (By.XPATH, "//input[@id='datepicker2']")
-    DATE_PICKER_3 = (By.XPATH, "//input[@id='datepicker3']")
-    SUBMIT_BUTTON = (By.XPATH, "//button[text()='Submit']")
+    NAME_INPUT = (By.CSS_SELECTOR, "#name")
+    EMAIL_INPUT = (By.CSS_SELECTOR, "#email")
+    PHONE_INPUT = (By.CSS_SELECTOR, "#phone")
+    ADDRESS_INPUT = (By.CSS_SELECTOR, "#textarea")
+    GENDER_RADIO = (By.CSS_SELECTOR, "input[name='gender'][value='{}']")
+    DAYS_CHECKBOX = (By.CSS_SELECTOR, "input[type='checkbox'][value='{}']")
+    COUNTRY_SELECT = (By.CSS_SELECTOR, "#country")
+    COLOR_SELECT = (By.CSS_SELECTOR, "#colors")
+    SORTED_LIST = (By.CSS_SELECTOR, "#animals")
+    DATE_PICKER = (By.CSS_SELECTOR, "#datepicker")
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
     
-    # File Upload Locators
-    SINGLE_FILE_UPLOAD = (By.ID, "singleFileUpload")
-    MULTIPLE_FILE_UPLOAD = (By.ID, "multipleFileUpload")
-    SINGLE_UPLOAD_BUTTON = (By.ID, "singleUploadBtn")
-    MULTIPLE_UPLOAD_BUTTON = (By.ID, "multipleUploadBtn")
+
     
     URL = "https://testautomationpractice.blogspot.com/"
     
@@ -58,14 +52,14 @@ class RegistrationPage:
 
     def select_gender(self, gender):
         """Select gender radio button"""
-        gender_radio = self.driver.find_element(By.XPATH, f"//input[@name='gender'][@value='{gender.lower()}']") 
+        gender_radio = self.driver.find_element(By.CSS_SELECTOR, f"input[name='gender'][value='{gender.lower()}']") 
         gender_radio.click()
 
     def select_days(self, days):
         """Select multiple days"""
         day_list = [day.strip() for day in days.split(",")]
         for day in day_list:
-            checkbox = self.driver.find_element(By.XPATH, f"//input[@type='checkbox'][@value='{day.lower()}']") 
+            checkbox = self.driver.find_element(By.CSS_SELECTOR, f"input[type='checkbox'][value='{day.lower()}']") 
             checkbox.click()
 
     def select_country(self, country):
@@ -91,103 +85,29 @@ class RegistrationPage:
                     select.select_by_visible_text(option.text)
                     break
 
-    def pick_date(self, date, picker_number):
-        """Pick date using specified date picker"""
+    def pick_date(self, date):
         day, month, year = date.split('/')
+        formatted_date = f"{month}/{day}/{year}"
         
-        # Format date based on picker number
-        # Picker 1 expects mm/dd/yyyy
-        # Picker 2 expects dd/mm/yyyy (no conversion needed)
-        if picker_number == '1':
-            formatted_date = f"{month}/{day}/{year}"
-        else:
-            formatted_date = date
+        max_retries = 3
+        retry_count = 0
         
-        # Try different selectors to find the date picker
-        selectors = [
-            f"#datepicker{'' if picker_number == '1' else picker_number}",
-            f"input[id='datepicker{'' if picker_number == '1' else picker_number}']",
-            f"input[name='datepicker{'' if picker_number == '1' else picker_number}']",
-            f"input[type='text'][id='datepicker{'' if picker_number == '1' else picker_number}']",
-            f"input[type='text'][class*='hasDatepicker']"
-        ]
-        
-        # Wait for page to be ready
-        time.sleep(2)
-        
-        # Try each selector
-        date_picker = None
-        for selector in selectors:
+        while retry_count < max_retries:
             try:
-                date_picker = self.driver.find_element(By.CSS_SELECTOR, selector)
-                print(f"Found date picker with selector: {selector}")
-                break
-            except:
-                continue
-                
-        if not date_picker:
-            raise Exception(f"Could not find date picker {picker_number} using any selector")
-        
-        # Clear and set value using different JavaScript approaches
-        try:
-            # Approach 1: Direct value setting
-            self.driver.execute_script("arguments[0].value = arguments[1];", date_picker, formatted_date)
-        except:
-            try:
-                # Approach 2: Using jQuery if available
-                self.driver.execute_script(f"$('#{date_picker.get_attribute('id')}').val('{formatted_date}');")
-            except:
-                # Approach 3: Dispatch events
-                self.driver.execute_script("""
-                    var input = arguments[0];
-                    input.value = arguments[1];
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                    input.dispatchEvent(new Event('blur', { bubbles: true }));
-                """, date_picker, formatted_date)
-
-    def pick_date_range(self, date_range):
-        """Pick date range using date picker 3"""
-        # Try different selectors
-        selectors = [
-            "#datepicker3",
-            "input[id='datepicker3']",
-            "input[name='datepicker3']",
-            "input[type='text'][id='datepicker3']",
-            "input[type='text'][class*='hasDatepicker']"
-        ]
-        
-        # Wait for page to be ready
-        time.sleep(2)
-        
-        # Try each selector
-        date_picker = None
-        for selector in selectors:
-            try:
-                date_picker = self.driver.find_element(By.CSS_SELECTOR, selector)
-                print(f"Found date range picker with selector: {selector}")
-                break
-            except:
-                continue
-                
-        if not date_picker:
-            raise Exception("Could not find date range picker using any selector")
-        
-        # Clear and set value using different JavaScript approaches
-        try:
-            # Approach 1: Direct value setting
-            self.driver.execute_script("arguments[0].value = arguments[1];", date_picker, date_range)
-        except:
-            try:
-                # Approach 2: Using jQuery if available
-                self.driver.execute_script(f"$('#{date_picker.get_attribute('id')}').val('{date_range}');")
-            except:
-                # Approach 3: Dispatch events
-                self.driver.execute_script("""
-                    var input = arguments[0];
-                    input.value = arguments[1];
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                    input.dispatchEvent(new Event('blur', { bubbles: true }));
-                """, date_picker, date_range)
+                script = f"""
+                    var input = document.getElementById('datepicker');
+                    input.value = '{formatted_date}';
+                    input.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                    input.dispatchEvent(new Event('blur', {{ bubbles: true }}));
+                """
+                self.driver.execute_script(script)
+                return
+            except Exception as e:
+                retry_count += 1
+                print(f"Retry {retry_count} - Failed to set date: {str(e)}")
+                if retry_count == max_retries:
+                    raise Exception(f"Failed to set date {formatted_date}") from e
+                time.sleep(2)
 
     def submit_form(self):
         """Submit the form"""
@@ -243,13 +163,12 @@ class RegistrationPage:
             print(f"Failed to verify message: {e}")
             return False
 
-    def verify_date_picker(self, number, expected_date):
-        """Verify that the date picker shows the expected date"""
-        picker_id = f"datepicker{'' if number == '1' else number}"
-        actual_value = self.driver.execute_script(f"return document.getElementById('{picker_id}').value;")
-        assert actual_value == expected_date, f"Expected {expected_date} but got {actual_value}"
 
-    def verify_form_submission(self):
-        """Verify that the form was submitted successfully"""
-        # Add appropriate verification
-        pass
+
+    def get_date_picker_value(self):
+        """Get the current value of the date picker"""
+        try:
+            return self.driver.execute_script("return document.getElementById('datepicker').value;")
+        except Exception as e:
+            print(f"Failed to get date picker value: {str(e)}")
+            return ""

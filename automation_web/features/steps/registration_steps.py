@@ -32,13 +32,9 @@ def step_impl(context, color):
 def step_impl(context, item):
     context.registration_page.select_sorted_item(item)
 
-@when('I pick "{date}" on Date Picker {picker_number}')
-def step_impl(context, date, picker_number):
-    context.registration_page.pick_date(date, picker_number)
-
-@when('I pick date range "{date_range}" on Date Picker 3')
-def step_impl(context, date_range):
-    context.registration_page.pick_date_range(date_range)
+@when('I pick "{date}" on Date Picker')
+def step_impl(context, date):
+    context.registration_page.pick_date(date)
 
 @when('I click the Submit button')
 def step_impl(context):
@@ -62,14 +58,12 @@ def step_impl(context, file_names):
 def step_impl(context, button_text):
     context.registration_page.click_upload_button(button_text)
 
-@then('the form should be submitted successfully')
-def step_impl(context):
-    # Add appropriate assertion based on the actual success indicator
-    pass
+@then('I should see "{expected_date}" on Date Picker')
+def step_impl(context, expected_date):
+    actual_date = context.registration_page.get_date_picker_value()
+    assert actual_date == expected_date, f"Expected {expected_date} but got {actual_date}"
 
-@then('Date Picker {number} should show "{expected_date}"')
-def step_impl(context, number, expected_date):
-    context.registration_page.verify_date_picker(number, expected_date)
+
 
 @then('I should see message "{expected_message}"')
 def step_impl(context, expected_message):

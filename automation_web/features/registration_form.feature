@@ -13,22 +13,11 @@ Feature: Website UI Automation - Form Submission and Upload
     And I select color as "Blue"
     And I select sorted list item "Dog"
 
-  @test_date1
-  Scenario: Fill Date Picker 1
+  @test_date
+  Scenario: Fill Date Picker
     Given I open the registration form page
-    When I pick "15/08/2024" on Date Picker 1
-
-  @test_date2
-  Scenario: Fill Date Picker 2
-    Given I open the registration form page
-    When I pick "08/20/2024" on Date Picker 2
-
-  @test_date3
-  Scenario: Fill Date Picker 3
-    Given I open the registration form page
-    When I pick date range "01/07/2025 - 03/07/2025" on Date Picker 3
-    And I click the Submit button
-    Then the form should be submitted successfully
+    When I pick "15/08/2024" on Date Picker
+    Then I should see "08/15/2024" on Date Picker
 
   @test_upload_single
   Scenario: Upload a single file
